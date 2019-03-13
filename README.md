@@ -1,6 +1,6 @@
 # Women Who Go Buenos Aires
 
-# Código de conducta
+## Código de conducta
 
 Quienes formamos parte de Women Who Go Buenos Aires nos comprometemos a mantener un ambiente confortable y seguro para todas las personas dentro del meetup, más allá de su identidad y expresión de género, orientación sexual, discapacidades, apariencia física, etnia, nacionalidad, religión (o falta de la misma), nivel socioeconómico u otras características personales.
 
