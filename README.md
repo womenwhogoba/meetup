@@ -32,8 +32,7 @@ Desde la organización estaremos disponibles, en todo momento, para ayudar a las
 
 1- Descargar el proyecto de github
 
-Haciendo `git clone https://github.com/womenwhogoba/meetup.git`
-O sino entrás a este link: https://github.com/womenwhogoba/meetup, vas al botón verde "Clone or download", hacés click en "Download ZIP" y lo descomprimís.
+Haciendo `git clone https://github.com/womenwhogoba/meetup.git`por línea de comando o sino entrás a este link: https://github.com/womenwhogoba/meetup, vas al botón verde "Clone or download", hacés click en "Download ZIP" y lo descomprimís.
 
 2- Instalar present
 
