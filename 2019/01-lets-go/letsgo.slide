@@ -1,0 +1,503 @@
+Let's go!
+Una introducción a Golang
+
+ba@womenwhogo.org
+@womenwhogoba
+
+* ¿Quiénes somos?
+
+- Escribinos a: ba@womenwhogo.org
+- Mencionanos en twitter: @womenwhogoba
+
+.image https://raw.githubusercontent.com/ashleymcnamara/gophers/master/WOMEN_WHO_GO.png 450 _
+
+* ¿GO es mejor que otros lenguajes?
+
+* Vamos a descubrirlo..
+
+.image https://raw.githubusercontent.com/ashleymcnamara/gophers/master/GOPHER_SAFARI.png 500 _
+
+* ¿Quiénes crearon GO?
+
+- Robert Griesemer, Ken Thompson y Rob Pike iniciaron el proyecto a fines de 2007
+- A mediados de 2008 se finaliza el diseño y se termina la primera implementación
+- La última versión disponible es la 1.12
+
+.image https://raw.githubusercontent.com/ashleymcnamara/gophers/master/GOPHER%20ACADEMY.png 350 _
+
+* Filosofía y motivaciones
+
+- Los sistemas cambiaron, los lenguajes no
+
+: CAMBIO: No new major systems language in a decade. But much has changed:
+: client/server focus, the rise of multi-core CPUs
+: Major systems languages were not designed with all these factors in mind. 
+
+- Velocidad de desarrollo
+
+: VELOCIDAD DE DESARROLLO: It takes too long to build software. The tools are slow and are getting slower. 
+: Machines have stopped getting faster. Yet software still grows and grows. 
+: If we stay as we are, before long software construction will be unbearably slow.
+
+- Repensar el sistemas de tipos
+
+: TIPOS: You can be productive or safe, not both. En GO se busca el intermedio.
+
+- Agregar funcionalidad al lenguaje no lo hace mejor, sólo más grande
+
+: AGREGAR FUNC: Go does not try to be like the other languages. Go does not compete on features. As of Go 1, the language is fixed. 
+
+* ¿Por qué? Go fast!
+"Make programming fun again" (Rob Pike)
+
+.image https://imgs.xkcd.com/comics/compiling.png 500 _
+
+* Características principales
+
+- Lenguaje procedural pero con funciones, métodos, interfaces y concurrencia
+- La eficiencia de un lenguaje estáticamente tipado con la facilidad de un lenguaje dinámico
+- Buen soporte para concurrencia y comunicación entre procesos
+- Garbage collector eficiente y sin latencia
+- Alta velocidad de compilación y ejecución
+- Legibilidad y simplicidad
+
+: No es orientado a objetos pero tiene el concepto de método y polimorfismo
+: LEGIBILIDAD: If a language has too many features, you waste time choosing which ones to use. 
+: Features add complexity. We want simplicity. Features hurt readability. We want readability. 
+
+.image https://raw.githubusercontent.com/ashleymcnamara/gophers/master/BuffaloCast.png 200 _
+
+* Entorno de desarrollo
+
+- Descargar GO de [[https://golang.org/dl/]]
+- Descomprimirlo en `/usr/local`
+- Editar `.profile`
+
+	# Define GOROOT
+	export GOROOT="/usr/local/go"
+
+	# add GOROOT to the PATH
+	PATH="$GOROOT/bin:$PATH"
+
+	# declare GOPATH
+	export GOPATH="$HOME/go"
+
+	# add GOPATH to the PATH
+	PATH="$GOPATH/bin:$PATH"
+- Crear la carpeta `$GOPATH/src`
+
+.image imagenes/go-version.png 55 _
+.caption Resultado de ejecutar go version
+
+: Las variables GOROOT Y GOPATH son opcionales
+: GOROOT: Ubicación de los binarios de GO
+: GOPATH: Ubicación de los fuentes, dependencias y código compilado
+: Después de editar el .profile reiniciar la sesión
+
+* IDEs
+
+.image https://juncotic.com/wp-content/uploads/2016/09/2000px-Icon-Vim.svg_-768x768.png 150 _ 
+.image https://upload.wikimedia.org/wikipedia/commons/thumb/2/2d/Visual_Studio_Code_1.18_icon.svg/245px-Visual_Studio_Code_1.18_icon.svg.png 150 _
+.image https://images.g2crowd.com/uploads/product/image/large_detail/large_detail_1513169944/goland.png 150 _
+
+* Primer programa
+
+.play -edit fuentes/hola-mundo.go
+
+* Probar, compilar, ejecutar, instalar
+
+	# Compilar y ejecutar las pruebas que están en el directorio actual
+	go test
+
+	# Compilar <fuente>.go (El ejecutable queda en la carpeta en la que está <fuente>.go)
+	go build <fuente>.go
+
+	# Compilar y ejecutar <fuente>.go
+	go run <fuente>.go  
+
+	# Compilar e instalar el <ruta del paquete> (El ejecutable queda en $GOPATH/bin)
+	go install <ruta del paquete>
+
+.image https://raw.githubusercontent.com/ashleymcnamara/gophers/master/MovingGopher.png 250 _
+
+: Ante la duda go help <comando>
+: go install gitlab.grupoesfera.com.ar/CAP-00082-GrupoEsfera-GO/src
+
+
+* Conceptos básicos: Paquetes, variables, funciones
+
+* Paquetes e imports
+
+.play -edit fuentes/paquetes.go
+
+- Todos los archivos de una carpeta deben pertenecer al mismo paquete
+- El nombre del paquete no necesariamente debe coincidir con el nombre de la carpeta
+
+: Todos los fuentes deben tener una declaración package
+: La última parte del path es el nombre del paquete math/rand -> rand
+
+* Paquetes e imports
+¿Qué pasa si tenemos imports sin uso?
+¿Y si tenemos una variable o constante sin uso?
+
+.image https://raw.githubusercontent.com/ashleymcnamara/gophers/master/DRAWING_GOPHER.png 400 _
+
+* Paquetes e imports
+.image imagenes/compile-errors.jpg 450 _
+
+
+* Valores exportados
+
+- Por defecto una variable global o función se define para todo un paquete (no para un fuente)
+- Si quiero usar una variable o función fuera del paquete en el que fue definida su nombre debe empezar con mayúsculas
+- Al importar un paquete sólo podés acceder a sus valores exportados
+
+.image https://raw.githubusercontent.com/ashleymcnamara/gophers/master/TEACHING_GOPHER.png 300 _
+
+
+* Variables y constantes
+
+Tipos más usados: bool, string, int, byte, float32
+
+.play fuentes/variables.go
+
+: Tipo al final. Int puede ser 32 o 64 según la arquitectura de donde se corra el programa (chequear)
+: Explicar valores por default (zero values) al ejecutar el código
+
+
+* Funciones
+
+.play -edit fuentes/multiple-retorno.go
+
+: Explicar que pueden recibir cero o más parámetros y devolver cero o N valores de retorno.
+: Explicar que los tipos van al final para que se lea mejor de izquierda a derecha
+: Mostrar que (x, y int) es válido
+
+* Funciones
+Pero.. ¿Qué hago si no necesito uno de los valores de retorno?
+¿Lo asigno a una variable igual?
+¿Tengo que usar la variable aunque no la necesite para que compile?
+
+.image https://raw.githubusercontent.com/ashleymcnamara/gophers/master/Facepalm_Gopher.png 400 _
+
+* No hace falta: usamos el guión bajo
+.image imagenes/guion-meme.jpg 400 _
+
+*tambien sirve para imports
+
+* Errores
+
+* En GO no hay manejo de excepciones
+
+.image https://raw.githubusercontent.com/ashleymcnamara/gophers/master/This_is_Fine_Gopher.png 500 _
+
+* Este es el patrón que se usa
+
+	i, err := strconv.Atoi("42")
+
+	if err != nil {
+	    fmt.Printf("no se puede convertir el numero: %v\n", err)
+	    return
+	}
+
+Para crear un error usamos `fmt.Error()` o `errors.New()`
+
+    if divisor == 0 {
+        return fmt.Errorf("no se puede usar %v como divisor", divisor)
+    }
+
+
+
+* Peeeeero..
+
+En el draft de GO 2.0 se incluye "check - handle"
+
+    func ParseJson(name string) (Parsed, error) {
+        handle err {
+            return fmt.Errorf("parsing json: %s %v", name, err)
+        }
+
+        // Open the file
+        f := check os.Open(name)
+        defer f.Close()
+
+        // Parse json into p
+        var p Parsed
+        check json.NewDecoder(f).Decode(&p)
+
+        return p
+    }
+
+
+* Punteros
+
+* Go tiene punteros, pero no es dificil usarlos
+
+.image https://raw.githubusercontent.com/ashleymcnamara/gophers/master/ZERO_FUCKS.png 500 _
+
+* Punteros
+
+- Un puntero contiene la dirección de memoria de una variable
+- `*T` es un puntero a una variable del tipo `T`, su valor por default es `nil`
+- El operador `&` nos da la dirección de una variable
+- El operador `*` nos permite acceder al valor apuntado por un puntero
+
+.play -edit fuentes/punteros.go
+
+: Aclarar que no se pide memoria ni hay que liberarla, de eso se encarga el garbage collector
+: Aclarar que no hay aritmética de punteros
+
+* Punteros a estructuras
+
+.play -edit fuentes/punteros-a-estructuras.go
+
+- Se recomienda utilizar punteros a estructuras
+
+: Explicar que si se no se recibe/devuelve un puntero a la estructura no se pueden modificar los valores de la estructura
+
+* Estructuras de control
+
+* If else
+
+	if x < 0 {
+		return x + 1
+	} else {
+		return x - 1
+	}
+
+El if puede comenzar con una sentencia corta que se ejecuta antes de la condición
+
+	if v := math.Pow(x, n); v < lim {
+		return v
+	}
+
+.image https://raw.githubusercontent.com/ashleymcnamara/gophers/master/GOPHER_LAPTOP.png 200 _
+
+* Switch
+
+	switch os := runtime.GOOS; os {
+	case "darwin":
+		fmt.Println("OS X.")
+	case "linux":
+		fmt.Println("Linux.")
+	default:
+		fmt.Printf("%s.", os)
+	}
+
+También se puede hacer un swith sin condición
+
+	switch {
+	case t.Hour() < 12:
+		fmt.Println("Buenos días")
+	case t.Hour() < 17:
+		fmt.Println("Buenas tardes")
+	default:
+		fmt.Println("Buenas noches")
+	}
+
+: Remarcar que Go ya provee el break automáticamente. Los cases no necesitan ser constantes, ni enteros necesariamente.
+
+* For
+
+	for i := 0; i < 10; i++ {
+		sum += i
+	}
+
+La inicialización y el incremento son opcionales
+
+	for ; sum < 1000; {
+		sum += sum
+	}
+
+.image https://raw.githubusercontent.com/ashleymcnamara/gophers/master/GOPHER_SAILOR_STRIPE.png 250 _
+
+* While
+
+	for sum < 1000 {
+		sum += sum
+	}
+
+Ciclo infinito
+
+	for {
+	}
+
+.image https://raw.githubusercontent.com/ashleymcnamara/gophers/master/pride_circle.png 250 _
+
+
+* Defer
+
+- Difiere la ejecución de una función hasta que termina la ejecución de la función que la contiene
+- Los argumentos de la llamada diferida se evalúan inmediatamente, pero el llamado a la función no se ejecuta hasta que la función que la contiene retorne
+- Las llamadas diferidas se guardan en una pila. Cuando una función termina, sus llamadas diferidas se ejecutan en orden LIFO (último en entrar, primero en salir)
+
+.image https://raw.githubusercontent.com/ashleymcnamara/gophers/master/GOPHER_ROCKS.png 250 _
+
+* Un ejemplo
+
+.play -edit fuentes/defer3.go /START /,/END /
+
+* Panic, recovers y defers
+
+- `panic` es una función de GO que permite interrumpir el flujo de una aplicación de manera repentina. La podemos invocar a mano o ser invocada por GO en caso de un error de runtime (ej: nil reference)
+- `panic` interrumpe la ejecución de la función donde es invocada, subiendo por el stack de ejecución hasta detener el proceso. En cada nivel del stack, se ejecutan las funciones defered antes de seguir subiendo
+- `recover` es una función de GO que permite interrumpir un `panic`. La misma solo funciona si es invocada desde un defer, de lo contrario devuelve nil
+
+.image imagenes/dont-panic.jpg 200 _
+
+* Un ejemplo
+
+.play fuentes/panic-recover.go /START /,/END /
+
+* Arrays, slices, maps
+
+* Arrays
+
+- El tipo [n]T es un array de n valores de tipo T
+- La longitud de un array es parte de su tipo, por eso, no pueden redimensionarse
+
+	var enteros [10]int
+
+.play -edit fuentes/arrays.go
+
+: Mostrar [5]int{2, 3, 5, 7, 11, 13} y [7]int{2, 3, 5, 7, 11, 13}
+
+* Pero.. ¿qué hago si no se la dimensión del array?
+
+* Uso slices!
+
+.image https://raw.githubusercontent.com/ashleymcnamara/gophers/master/GOPHER_MIC_DROP.png 500 _
+
+* Slices
+
+- Un slice es un puntero a un array, modificar un slice implica modificar el array y viceversa
+- El tipo []T es un slice con elementos de tipo T
+- Se redimensionan dinámicamente. En la práctica son más comunes que los arrays
+- El zero value de un `slice` es `nil`
+- La longitud de un slice es el número de elementos que contiene
+- La capacidad de un slice es la cantidad de elementos que contiene el array subyacente
+
+* Un ejemplo
+
+.play -edit fuentes/slices3.go
+
+* Otro ejemplo
+
+.play -edit fuentes/slices4.go
+
+: Aclarar que make devuelve un puntero a un array
+: sacar el make y mostrar que al usar append anda igual
+
+* Maps
+
+.play -edit fuentes/maps.go
+
+: Comentar linea de make y ver que explota
+: Aclarar que tanto la clave como el valor pueden ser estructuras
+
+* Operaciones con Maps
+
+- Se pueden eliminar elementos de un mapa con `delete`
+
+  	delete(mapa, clave) // si la clave no existe, la sentencia no falla y el mapa no se modifica
+
+- Se puede verificar si existe un elemento en un mapa
+
+  	elemento, existe = mapa[clave]
+
+.image https://raw.githubusercontent.com/ashleymcnamara/gophers/master/NERDY.png 300 _
+
+* Un ejemplo
+
+.play -edit fuentes/maps3.go /START /,/END /
+
+: Comentar linea de make y ver que explota
+: Aclarar que tanto la clave como el valor pueden ser estructuras
+: Aclarar que es opcional poner Vertice
+
+* ¿Peeero al final... GO reemplaza a Java?
+
+* ¿Es mejor o peor que Python?
+
+* ¿Qué me conviene usar?
+
+* Esto no es una pelea, ningún lenguaje es mejor o peor que otro
+
+.image https://raw.githubusercontent.com/ashleymcnamara/gophers/master/GOPHER_STAR_WARS.png 400 _
+
+Debemos aprender sobre sus filosofías para saber cuando nos conviene usar cada uno
+
+* Por eso... dudá como dudan lxs expertas/os
+
+.image imagenes/duda.png 400 _
+
+* Bonus: Métodos e interfaces
+
+* Tipos y métodos
+
+- En GO no tenemos clases
+- Si queremos agrupar datos y funciones podemos utilizar tipos
+- Una función asociada a un tipo es un método, en este contexto al tipo lo llamamos `receiver`
+
+	type Vertice struct {
+		X, Y float64
+	}
+
+	func (vertice Vertice) Abs() float64 {
+		return math.Sqrt(vertice.X*vertice.X + vertice.Y*vertice.Y)
+	}
+
+- Invocamos un método con .
+
+	v := Vertice{3, 4}
+	fmt.Println(v.Abs())
+
+* Pointer receivers
+
+Si queremos que un método modifique los valores de su `receiver` usamos punteros
+
+.play -edit fuentes/pointer-receivers.go /START /,/END /
+
+: Sacar el * del receiver y mostrar que no se modifica el vértice
+: Comentar que en general siempre se usan pointer receivers
+: Usar un pointer receiver es más eficiente ya que no se realiza una copia de la estructura
+: No deberían mezclarse métodos con pointer receivers y métodos con value receivers
+
+* Interfaces
+
+Una `interface` es un conjunto de firmas de métodos
+
+El paquete `fmt` define la `interface` Stringer, los tipos que la implementan se pueden convertir a string
+
+	type Stringer interface {
+	    String() string
+	}
+
+.image https://raw.githubusercontent.com/ashleymcnamara/gophers/master/Unicorn_Gopher.png 300 _
+
+* Las interfaces, en GO, se implementan implícitamente
+
+Si camina como pato, tiene pico de pato y hace cuak como un pato... es una implementación de la interfaz pato
+
+.image https://s3.pixers.pics/pixers/700/FO/72/61/31/27/700_FO72613127_eedd2df018d37a6880875a410a204a11.jpg 400 _
+
+
+* Polimorfismo
+
+.play -edit fuentes/polimorfismo.go  /START /,/END /
+
+: Cuando usamos interfaces estamos usando punteros a los tipos, no podemos hacer *Animal porque es un puntero a un puntero
+: Mostrar que si sacamos el & de gato deja de compilar, porque el struct Gato no implementa la interfaz, pero el puntero a struct gato si
+
+* Estructuras embebidas
+
+- En GO no hay herencia, pero tenemos composición++
+- Una estructura puede tener a otra embebida, y poseer todas sus cualidades
+
+.play -edit fuentes/embedding.go /START /,/END /
+
+: Si se define el mismo método o variable para Motor y Auto usa la de Auto
+
+
+
+

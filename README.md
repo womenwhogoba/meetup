@@ -26,3 +26,21 @@ En resumen:
 - Asumir que todas las personas hacen siempre lo mejor posible de acuerdo a sus capacidades y limitaciones.
 
 Desde la organización estaremos disponibles, en todo momento, para ayudar a las personas que asistan a resolver cualquier conflicto que pudiera ocurrir. Ante la menor duda, incomodidad o si adviertes que alguien está sufriendo una situación de acoso, no dudes en ponerte en contacto.
+
+
+## ¿Cómo hago para ver las slides?
+
+1- Descargar el proyecto de github
+
+Haciendo `git clone https://github.com/womenwhogoba/meetup.git`
+O sino entrás a este link: https://github.com/womenwhogoba/meetup, vas al botón verde "Clone or download", hacés click en "Download ZIP" y lo descomprimís.
+
+2- Instalar present
+
+Escribís por línea de comandos: `go get golang.org/x/tools/cmd/present`
+
+3- Pararse en el directorio donde está el archivo .slide que quiero ver y ejecutar present
+
+Escribís por línea de comandos: `present`
+
+4- Hacés click en el link que te va a mostrar y te va abrir las slides en tu navegador! :)
